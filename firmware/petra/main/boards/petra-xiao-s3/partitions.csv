@@ -1,0 +1,11 @@
+# Petra 8 MB layout: single factory app + large assets partition.
+# The "Hey Petra" wake word needs the English MultiNet model (mn7_en, ~2.7 MB),
+# which does not fit the 2 MB assets partition of partitions/v2/8m.csv.
+# No ota_0/ota_1: firmware is updated over USB only (also stops OTA from
+# replacing Petra with stock firmware).
+# Name,   Type, SubType, Offset,   Size,     Flags
+nvs,      data, nvs,     0x9000,   0x4000,
+otadata,  data, ota,     0xd000,   0x2000,
+phy_init, data, phy,     0xf000,   0x1000,
+factory,  app,  factory, 0x20000,  0x380000,
+assets,   data, spiffs,  0x3A0000, 0x460000,

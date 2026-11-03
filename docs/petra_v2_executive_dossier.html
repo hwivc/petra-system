@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PETRA v2 — Executive Product Architecture & Commercial Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       PETRA v2 EXECUTIVE DOSSIER — DESIGN SYSTEM
+       Theme: Deep Tech Emerald & Obsidian // Editorial Hardware Dossier
+       ========================================================================== */
+
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-surface: #111827;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-light: #f8fafc;
+      
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --accent-teal: #14b8a6;
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dark: #0f172a;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(16, 185, 129, 0.35);
+      
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Outer wrapper */
+    .dossier-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 28px;
+    }
+
+    /* Print / PDF Optimization */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 12pt;
+      }
+      .dossier-wrapper {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .glass-card, .metric-box, .project-card, .tier-card {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+      }
+      h1, h2, h3, strong {
+        color: #0f172a !important;
+      }
+      p, li {
+        color: #334155 !important;
+      }
+      .hero-cover {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        border-radius: 0 !important;
+        padding: 40px !important;
+      }
+    }
+
+    /* ---------------------------------------------------- COVER SECTION */
+    .hero-cover {
+      background: linear-gradient(135deg, #09131f 0%, #062226 50%, #0c1a2e 100%);
+      border: 1px solid var(--border-highlight);
+      border-radius: 28px;
+      padding: 64px 54px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 56px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(16, 185, 129, 0.12);
+    }
+
+    .hero-cover::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .doc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #ffffff 40%, #5eead4 85%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: #cbd5e1;
+      max-width: 820px;
+      line-height: 1.5;
+      font-weight: 400;
+      margin-bottom: 36px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta strong {
+      color: #f1f5f9;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ---------------------------------------------------- SECTION COMMONS */
+    .section-block {
+      margin-bottom: 64px;
+    }
+
+    .section-header {
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-emerald);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    /* ---------------------------------------------------- IMAGE CARDS & SHOWCASES */
+    .image-showcase {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #0f172a;
+      margin: 28px 0;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-showcase img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .showcase-caption {
+      padding: 18px 24px;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .showcase-caption strong {
+      color: #f1f5f9;
+    }
+
+    /* Grid for Comparison */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+      gap: 24px;
+      margin: 28px 0;
+    }
+
+    .evolution-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .evolution-card.v2 {
+      border-color: var(--border-highlight);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.12);
+    }
+
+    .evolution-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #090d16;
+    }
+
+    .evolution-body {
+      padding: 24px;
+      flex: 1;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .tag-v1 { background: #334155; color: #cbd5e1; }
+    .tag-v2 { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* ---------------------------------------------------- MULTI-TIER EDUCATION (THINK BIG) */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .tier-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 26px 22px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+    }
+
+    .tier-indicator {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+    .t1 { background: #3b82f6; color: #fff; }
+    .t2 { background: #10b981; color: #fff; }
+    .t3 { background: #f59e0b; color: #fff; }
+    .t4 { background: #8b5cf6; color: #fff; }
+
+    .tier-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tier-sub {
+      font-size: 0.85rem;
+      color: var(--accent-emerald);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .tier-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ---------------------------------------------------- 3D PRINTED PROJECT GALLERY */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .project-curriculum {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ---------------------------------------------------- MONETIZATION & BUSINESS MODEL */
+    .revenue-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 28px 0;
+    }
+
+    .revenue-card {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .revenue-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .revenue-type {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    .revenue-card ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .revenue-card ul li strong {
+      color: #f1f5f9;
+    }
+
+    /* Table styling */
+    .financial-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 0.95rem;
+    }
+
+    .financial-table th {
+      background: #1e293b;
+      color: #f8fafc;
+      text-align: left;
+      padding: 14px 18px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent-emerald);
+    }
+
+    .financial-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: #cbd5e1;
+    }
+
+    .financial-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .number-col {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: #38bdf8 !important;
+    }
+
+    /* Callout alert */
+    .callout-box {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 4px solid var(--accent-emerald);
+      border-radius: 0 16px 16px 0;
+      padding: 22px 28px;
+      margin: 28px 0;
+    }
+
+    .callout-box h4 {
+      color: #34d399;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .callout-box p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    .dossier-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 36px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dossier-wrapper">
+
+  <!-- ====================================================================
+       1. HERO EXECUTIVE COVER
+       ==================================================================== -->
+  <header class="hero-cover">
+    <div class="doc-badge">⚡ PLASTIBYTES & HIVC // STRATEGIC HARDWARE DOSSIER</div>
+    <h1 class="hero-title">PETRA v2: The Autonomous AI STEM Educator</h1>
+    <p class="hero-subtitle">
+      A Ruggedized Handheld AI Companion & Connected MCP Hardware Ecosystem for Africa and Emerging Markets — Inspiring Students from Primary Science to Deep-Tech Hardware Ventures.
+    </p>
+
+    <div class="hero-meta">
+      <div>
+        <strong>DOCUMENT VERSION</strong>
+        <span>2.0.0 (Executive Production Draft)</span>
+      </div>
+      <div>
+        <strong>TARGET LAUNCH</strong>
+        <span>Q2–Q3 2027 Commercial Pilot</span>
+      </div>
+      <div>
+        <strong>AUTHORS & ARCHITECTS</strong>
+        <span>Principal Systems, Industrial Design & Growth Team</span>
+      </div>
+      <div>
+        <strong>ORIGIN</strong>
+        <span>Buea, Cameroon // PlastiBytes & HIVC</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       2. THINK BIG: MULTI-TIER EDUCATIONAL SCOPE
+       ==================================================================== -->
+  <section class="section-block">
+    <div class="section-header">
+      <div>
+        <span class="section-num">01 / PEDAGOGICAL REACH</span>
+        <h2 class="section-title">"Think Big": Learning Across All Educational Tiers</h2>
+      </div>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 24px;">
+      Petra v2 is not a toy; it is an adaptive intellectual partner. Through dynamic prompt adjustment and interchangeable physical sensor kits, Petra scales its pedagogy from 8-year-old primary school discoverers to 24-year-old startup engineers prototyping market-ready products.
+    </p>
+
+    <div class="tiers-grid">
+      <!-- Tier 1 -->
+      <div class="tier-card">
+        <div class="tier-indicator t1">K-5</div>
+        <h3 class="tier-title">Primary School</h3>
+        <div class="tier-sub">Curiosity & Nature</div>
+        <p class="tier-desc">
+          Interactive "Show & Tell" using the ring-light camera. Petra identifies leaves, rocks, and recyclable plastics. Gamified multiple-choice quizzes on the color screen.
+        </p>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="tier-card">
+        <div class="tier-indicator t2">6-12</div>
+        <h3 class="tier-title">Secondary & High</h3>
+        <div class="tier-sub">Electronics & Coding</div>
+        <p class="tier-desc">
+          Ohm's law schematics, breadboard continuity testing, and basic robotics. Students write code and observe real-world execution on the wireless rover chassis.
+        </p>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="tier-card">
+        <div class="tier-indicator t3">Univ</div>
+        <h3 class="tier-title">Higher Education</h3>
+        <div class="tier-sub">Embedded IoT & CAD</div>
+        <p class="tier-desc">
+          ESP32 firmware architecture, Fusion 360 parametric design, 3D printing tolerances, and remote agricultural sensor telemetry networks.
+        </p>
+      </div>
+
+      <!-- Tier 4 -->
+      <div class="tier-card">
+        <div class="tier-indicator t4">Pro</div>
+        <h3 class="tier-title">Startup Incubator</h3>
+        <div class="tier-sub">Hardware Founders</div>
+        <p class="tier-desc">
+          Mentorship Module 6: "Launch & Scale." Product costing, grant writing (Tony Elumelu, Mastercard Foundation), low-volume manufacturing, and DFM validation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       3. 3D PRINTED REAL-WORLD PROJECTS SHOWCASE
+       ==================================================================== -->
+  <section class="section-block page-break">
+    <div class="section-header">
+      <div>
+        <span class="section-num">02 / HANDS-ON CREATION</span>
+        <h2 class="section-title">Real-World 3D-Printed Projects Built with Petra</h2>
+      </div>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 1.05rem;">
+      Petra connects the digital AI tutor to physical creation. Students use <strong>PlastiBytes 100% recycled PET filament</strong> (made locally from discarded water bottles) to 3D print real functional machinery guided by Petra’s step-by-step display.
+    </p>
+
+    <div class="projects-grid">
+      <!-- Project 1: Robotic Arm -->
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" alt="3D Printed Robotic Bionic Arm">
+        <div class="project-content">
+          <span class="project-curriculum">Robotics & Biomechanics</span>
+          <h4 class="project-title">3D-Printed Bionic Robotic Gripper</h4>
+          <p class="project-desc">
+            Students print articulate finger joints from recycled PET, wire servo motors to Petra's MCP expansion bus, and program touch reflexes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Project 2: Water Monitor -->
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80" alt="3D Printing in Action">
+        <div class="project-content">
+          <span class="project-curriculum">Clean Water & IoT</span>
+          <h4 class="project-title">Automated Water Tank Controller</h4>
+          <p class="project-desc">
+            Inspired by Ngum Love's university project: a 3D-printed weatherproof enclosure housing ultrasonic water sensors to prevent village tank overflows.
+          </p>
+        </div>
+      </div>
+
+      <!-- Project 3: Clean Energy Turbine -->
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=800&q=80" alt="Electronics and Circuit Engineering">
+        <div class="project-content">
+          <span class="project-curriculum">Renewable Energy</span>
+          <h4 class="project-title">Mini Wind Turbine & Solar Tracker</h4>
+          <p class="project-desc">
+            Aerodynamic 3D-printed turbine blades coupled with small DC dynamos. Petra monitors power output and teaches real-time energy conversion.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-box">
+      <h4>♻️ Closing the Loop on African Plastic Waste</h4>
+      <p>
+        Over <strong>125,000 plastic bottles</strong> have already been collected and diverted from Cameroon’s gutters by PlastiBytes. Petra demonstrates circular economics live: students shred water bottles, extrude filament, and print their own lab equipment.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       4. HARDWARE EVOLUTION: VERSION 1 vs VERSION 2
+       ==================================================================== -->
+  <section class="section-block page-break">
+    <div class="section-header">
+      <div>
+        <span class="section-num">03 / INDUSTRIAL DESIGN & TEARDOWN</span>
+        <h2 class="section-title">Hardware Evolution: Prototype to Production</h2>
+      </div>
+    </div>
+
+    <div class="grid-2col">
+      <!-- v1 Card -->
+      <div class="evolution-card">
+        <img src="file:///C:/Users/UNESCO/.gemini/antigravity-ide/brain/f3a210d6-2668-4d8d-b079-acd7f3d2faed/petra_v1_fusion.png" alt="Petra Version 1 CAD Capture">
+        <div class="evolution-body">
+          <span class="tag-badge tag-v1">Version 1 — Exhibition Baseline</span>
+          <h3 style="margin-bottom: 8px;">Stationary Desktop Stand</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">
+            Constructed for CITS26 Tech Summit. Modular breadboard wiring, fixed desktop orientation, 0.96" OLED with external ePaper panel.
+          </p>
+          <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 18px; line-height: 1.6;">
+            <li>Seeed XIAO ESP32-S3 module</li>
+            <li>Monochrome 128×64 mini screen</li>
+            <li>Single omnidirectional PDM mic</li>
+            <li>Fragile FDM 3D printed casing</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v2 Card -->
+      <div class="evolution-card v2">
+        <img src="file:///C:/Users/UNESCO/.gemini/antigravity-ide/brain/f3a210d6-2668-4d8d-b079-acd7f3d2faed/petra_v2_product_render_1793169406173.jpg" alt="Petra Version 2 Handheld Product Render">
+        <div class="evolution-body">
+          <span class="tag-badge tag-v2">Version 2 — Handheld Production Unit</span>
+          <h3 style="margin-bottom: 8px; color: #34d399;">Autonomous Handheld Lab</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">
+            Engineered for African classrooms: IP54 dust sealed, 1.5m drop-proof TPU bumpers, solar trickle charging, and vivid sunlight IPS display.
+          </p>
+          <ul style="font-size: 0.85rem; color: #cbd5e1; padding-left: 18px; line-height: 1.6;">
+            <li>Custom monolithic PCB: <strong>ESP32-P4 + C6</strong></li>
+            <li>4.0" 640×480 sunlight-readable IPS touch</li>
+            <li>Dual beamforming mic array + 2.5W speaker</li>
+            <li>Macro camera with 6-LED ring illuminator</li>
+            <li>3,500 mAh safe LiFePO4 battery</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEM Kit Showcase -->
+    <div class="image-showcase">
+      <img src="file:///C:/Users/UNESCO/.gemini/antigravity-ide/brain/f3a210d6-2668-4d8d-b079-acd7f3d2faed/petra_v2_ecosystem_kit_1793169434628.jpg" alt="Petra v2 Complete STEM Ecosystem Kit">
+      <div class="showcase-caption">
+        <div>
+          <strong>The Connected MCP Hardware Ecosystem Kit</strong> — Handheld AI Unit, Smart Rover, Environmental Sensor Pod, Solar Panel & Recycled Filament.
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-emerald);">MODULAR PLUG & PLAY</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       5. BUSINESS MODEL & MONETIZATION
+       ==================================================================== -->
+  <section class="section-block page-break">
+    <div class="section-header">
+      <div>
+        <span class="section-num">04 / COMMERCIAL ARCHITECTURE</span>
+        <h2 class="section-title">Business Model & Recurring Monetization</h2>
+      </div>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 1.05rem;">
+      Rather than relying on one-off hardware sales, Petra v2 operates an integrated <strong>Hardware + SaaS + Consumables ecosystem</strong> with strong unit economics and predictable cash flow.
+    </p>
+
+    <div class="revenue-pillars">
+      <!-- Pillar 1 -->
+      <div class="revenue-card">
+        <div class="revenue-type">Pillar 01 // Hardware</div>
+        <h4>📦 Device & Kit Sales</h4>
+        <ul>
+          <li><strong>Petra Solo:</strong> $79 USD (~49,000 FCFA). Handheld AI unit for individual students.</li>
+          <li><strong>Petra Explorer Kit:</strong> $129 USD (~80,000 FCFA). Includes sensor pod and breadboard.</li>
+          <li><strong>Classroom Lab Box:</strong> $1,490 USD. 10 handhelds, 2 rovers, charging hub, 10kg filament.</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="revenue-card">
+        <div class="revenue-type">Pillar 02 // SaaS Subscriptions</div>
+        <h4>🎓 Mentorship & Software</h4>
+        <ul>
+          <li><strong>Student Mentorship:</strong> $9.99/mo. 1-on-1 practitioner mentorship & project certification.</li>
+          <li><strong>Teacher SaaS Portal:</strong> $199/yr per school. Automated grading, lab tracking, lesson builder.</li>
+          <li><strong>Certification Exams:</strong> $25 fee for verified hardware engineering credentials.</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="revenue-card">
+        <div class="revenue-type">Pillar 03 // Physical Consumables</div>
+        <h4>🧵 Recycled Filament Club</h4>
+        <ul>
+          <li><strong>Filament Subscription:</strong> $35/mo for 2kg monthly recycled PET/PETG spools.</li>
+          <li><strong>Direct Spool Sales:</strong> $18/spool (undercutting imported Chinese virgin filament by 30%).</li>
+          <li><strong>Spare Sensor Packs:</strong> Replacements & advanced sensor modules.</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 4 -->
+      <div class="revenue-card">
+        <div class="revenue-type">Pillar 04 // Institutional</div>
+        <h4>🏛️ CSR & B2G Grants</h4>
+        <ul>
+          <li><strong>Telecom Subsidies:</strong> MTN & Orange sponsoring connectivity & devices for schools.</li>
+          <li><strong>Govt Education Contracts:</strong> MINESEC (Cameroon), Rwanda Education Board.</li>
+          <li><strong>Development Funds:</strong> Tony Elumelu Foundation, AfDB, UNDP, Mastercard Foundation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Financial Projections Table -->
+    <h3 style="margin: 36px 0 16px 0; font-family: var(--font-display);">3-Year Unit & Revenue Projections (Sub-Saharan Africa Pilot)</h3>
+    <table class="financial-table">
+      <thead>
+        <tr>
+          <th>Metric / Revenue Stream</th>
+          <th>Year 1 (Pilot)</th>
+          <th>Year 2 (Regional Expansion)</th>
+          <th>Year 3 (Scale)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hardware Units Shipped</td>
+          <td class="number-col">1,200 units</td>
+          <td class="number-col">8,500 units</td>
+          <td class="number-col">35,000 units</td>
+        </tr>
+        <tr>
+          <td>Hardware Sales Revenue</td>
+          <td class="number-col">$118,000</td>
+          <td class="number-col">$840,000</td>
+          <td class="number-col">$3,465,000</td>
+        </tr>
+        <tr>
+          <td>Mentorship & SaaS ARR</td>
+          <td class="number-col">$36,000</td>
+          <td class="number-col">$310,000</td>
+          <td class="number-col">$1,540,000</td>
+        </tr>
+        <tr>
+          <td>Recycled Filament Consumables</td>
+          <td class="number-col">$24,000</td>
+          <td class="number-col">$185,000</td>
+          <td class="number-col">$820,000</td>
+        </tr>
+        <tr style="background: rgba(16, 185, 129, 0.08); font-weight: 700;">
+          <td style="color: #34d399;">TOTAL REVENUE</td>
+          <td class="number-col" style="color: #34d399 !important;">$178,000</td>
+          <td class="number-col" style="color: #34d399 !important;">$1,335,000</td>
+          <td class="number-col" style="color: #34d399 !important;">$5,825,000</td>
+        </tr>
+        <tr>
+          <td>Blended Gross Margin</td>
+          <td class="number-col">42%</td>
+          <td class="number-col">51%</td>
+          <td class="number-col">56%</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ====================================================================
+       6. MANUFACTURING & ROLLOUT ROADMAP
+       ==================================================================== -->
+  <section class="section-block">
+    <div class="section-header">
+      <div>
+        <span class="section-num">05 / EXECUTION TIMELINE</span>
+        <h2 class="section-title">Product Roadmap & Commercial Rollout</h2>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <strong style="color: var(--accent-emerald);">PHASE 1: Immediate (Q4 2026)</strong>
+          <div style="color: var(--text-muted); font-size: 0.9rem;">CITS26 Exhibition validation, prompt testing, and virtual smart-board deployment.</div>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: #34d399;">COMPLETED / ACTIVE</span>
+      </div>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <strong style="color: var(--accent-cyan);">PHASE 2: EVT Prototype (Q1 2027)</strong>
+          <div style="color: var(--text-muted); font-size: 0.9rem;">Custom ESP32-P4+C6 PCB tape-out, dual beamforming acoustic tuning, and 10 hand-assembled functional units.</div>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: #38bdf8;">ENGINEERING</span>
+      </div>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <strong style="color: var(--accent-purple);">PHASE 3: DVT & School Pilot (Q2 2027)</strong>
+          <div style="color: var(--text-muted); font-size: 0.9rem;">Injection mold tooling with recycled PET composite. 50-unit classroom trial across 5 Cameroonian secondary schools.</div>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: #a855f7;">VALIDATION</span>
+      </div>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <strong style="color: var(--accent-amber);">PHASE 4: Mass Production & Launch (Q3 2027)</strong>
+          <div style="color: var(--text-muted); font-size: 0.9rem;">Initial 1,000-unit factory production run. B2G distribution and PlastiBytes Mentorship subscription expansion.</div>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; color: #f59e0b;">COMMERCIAL SCALE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       7. FOOTER
+       ==================================================================== -->
+  <footer class="dossier-footer">
+    <p>PETRA v2 HARDWARE ARCHITECTURE & COMMERCIAL STRATEGY</p>
+    <p style="margin-top: 4px;">&copy; 2026 PlastiBytes & Hardware Innovation Valley Community (HIVC). All Rights Reserved.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

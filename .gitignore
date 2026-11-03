@@ -1,0 +1,12 @@
+# secrets
+secrets.h
+.env
+# build output
+build/
+.pio/
+managed_components/
+sdkconfig.old
+tools/virtual-display/config.json
+__pycache__/
+*.pyc
+.vscode/

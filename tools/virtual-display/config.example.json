@@ -1,0 +1,9 @@
+{
+  "mcp_endpoint": "wss://api.xiaozhi.me/mcp/?token=PASTE_YOUR_TOKEN",
+  "event_name": "CITS26 - Yaounde",
+  "http_port": 80,
+  "idle_rotate_sec": 90,
+  "idle_timeout_sec": 120,
+  "theme": "soft",
+  "transition": "fade"
+}
